@@ -22,11 +22,24 @@ async def get_all_users(message: types.Message):
 
 @dp.message_handler(text="/reklama", user_id=ADMINS)
 async def send_ad_to_all(message: types.Message):
+    await message.answer("Введите текст рекламы")
+    await Reklama.reklama.set()
+
+
+@dp.message_handler(state=Reklama.reklama)
+async def send_ad_to_all(message: types.Message, state: FSMContext):
+    reklama_text = message.text
+    await state.update_data(
+        {"reklama": reklama_text}
+    )
+    data = await state.get_data()
+    reklama = data.get("reklama")
     users = db.select_all_users()
     for user in users:
         user_id = user[0]
-        await bot.send_message(chat_id=user_id, text="@gif_wow подписывайтесь и подрочите!")
+        await bot.send_message(chat_id=user_id, text=reklama)
         await asyncio.sleep(0.05)
+        await state.finish()
 
 @dp.message_handler(text="/cleandb", user_id=ADMINS)
 async def get_all_users(message: types.Message):
