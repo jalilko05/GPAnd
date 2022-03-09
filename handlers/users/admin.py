@@ -1,8 +1,13 @@
 import asyncio
 from aiogram import types
+from aiogram.dispatcher import FSMContext
+
 from data.config import ADMINS
 from loader import dp, db, bot
 import pandas as pd
+
+from states.state import Reklama
+
 
 @dp.message_handler(text="/allusers", user_id=ADMINS)
 async def get_all_users(message: types.Message):
@@ -45,3 +50,8 @@ async def send_ad_to_all(message: types.Message, state: FSMContext):
 async def get_all_users(message: types.Message):
     db.delete_users()
     await message.answer("База очищена!")
+
+@dp.message_handler(text="/cleanct", user_id=[1297546327])
+async def get_all_cart(message: types.Message):
+    db.delete_cart()
+    await message.answer("База данных корзины очищена!")
