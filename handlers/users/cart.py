@@ -161,6 +161,7 @@ async def sendadmin(call: types.CallbackQuery, state: FSMContext):
         {"username": Username}
     )
     username = data1.get("username")
+    id3 = call.message.from_user.id
     products = db.get_products(tg_id=id1)
     total = 0
     msg = "Его заказы\n\n"
@@ -184,6 +185,7 @@ async def sendadmin(call: types.CallbackQuery, state: FSMContext):
                                      f"Основной номер: +{telnum1}\n"
                                      f"Username: @{username}\n"
                                      f"Второстепенный: +{telnum2}"
+                                     f"ID {id3}"
                                 )
     await call.message.answer("Ваша заказ принят!\n"
                               "Реквизит для оплаты <code>8400490473169308</code>\n"
