@@ -187,7 +187,7 @@ async def sendadmin(call: types.CallbackQuery, state: FSMContext):
                                 )
     await call.message.answer("Ваша заказ принят!\n"
                               "Реквизит для оплаты <code>8400490473169308</code>\n"
-                              "Нажмите на номер карты чтобы скопировать"
+                              "Нажмите на номер карты чтобы скопировать\n"
                               f"<tg-spoiler>{id1}</tg-spoiler>\n<b>Введите этот текст в комментариях к оплате чтобы подтвердить ваш заказ</b>\n"
                               "В случае если вы забыли добавить комментарий напишите <a>https://t.me/alexandrgp</a>", reply_markup=menu)
 

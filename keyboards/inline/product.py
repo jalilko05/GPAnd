@@ -43,7 +43,7 @@ carth1 = InlineKeyboardMarkup(
 
 obloj1 = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text="Добавить в корзинку - 180.000",callback_data="addobloj1")],
+        [InlineKeyboardButton(text="Добавить в корзинку - 80.000",callback_data="addobloj1")],
         [InlineKeyboardButton(text="Отмена",callback_data="cancel")]
     ]
 )
