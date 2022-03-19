@@ -1,14 +1,15 @@
 import sqlite3
 
 from aiogram import types
+from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.builtin import CommandStart
 from data.config import ADMINS
 from loader import dp, db, bot
 from keyboards.default.menu import menu
 
 
-@dp.message_handler(CommandStart())
-async def bot_start(message: types.Message):
+@dp.message_handler(CommandStart(),state="*")
+async def bot_start(message: types.Message,state:FSMContext):
     name = message.from_user.full_name
     # Добавляем пользователей в базу
     try:
@@ -32,4 +33,5 @@ async def bot_start(message: types.Message):
                              f"🤖 Я бот который поможет тебе заказать кожаные изделия от G.P.AND\n\n"
                              f"🤝 Заказать похожего или совсем иного бота? Свяжитесь с разработчиком <a href='https://t.me/zufar_ik'>Zufar</a>",
                              reply_markup=menu)
+    await state.finish()
 

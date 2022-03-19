@@ -20,6 +20,10 @@ def is_number(s):
 async def cataloc(message: types.Message):
     await message.answer("Выберите категорию заказа", reply_markup=category)
 
+@dp.message_handler(text="Отмена",state="*")
+async def back1(message: types.Message, state: FSMContext):
+    await message.answer("Вы отменили действие!",reply_markup=category)
+    await state.finish()
 
 @dp.message_handler(text="Картхолдеры и прочее")
 async def cataloc(message: types.Message, state: FSMContext):
@@ -362,5 +366,5 @@ async def send(call: types.CallbackQuery, state: FSMContext):
     cap = data1.get("opisanie")
     foto = data1.get("photo")
     await call.bot.send_photo(chat_id=1297546327, photo=foto, caption=f"{cap}\nUsername: @{username}")
-    # await call.bot.send_message(chat_id=1297546327,text=f"{cap}\n Username: @{usernam}")
+    await call.bot.send_photo(chat_id=80386502, photo=foto, caption=f"{cap}\nUsername: @{username}")
     await state.finish()
