@@ -16,7 +16,7 @@ def is_number(s):
         return False
 
 
-@dp.message_handler(text="🛍Каталог")
+@dp.message_handler(text="🛍Каталог",state="*")
 async def cataloc(message: types.Message):
     await message.answer("Выберите категорию заказа", reply_markup=category)
 
@@ -27,43 +27,34 @@ async def back1(message: types.Message, state: FSMContext):
 
 @dp.message_handler(text="Картхолдеры и прочее")
 async def cataloc(message: types.Message, state: FSMContext):
-    ff = (message.bot.id, message.message_id)
-    await state.update_data(
-        {"del":ff}
-    )
 
     await message.answer_photo(
         photo="https://ibb.co/Y06zvdz",
         caption="Бананка из кожи",
         reply_markup=bananka1)
-    nameb1 = "Бананка из кожи"
-    await state.update_data(
-        {"bananka1": nameb1}
-    )
+
 
     # await call.message.bot.delete_message(call.bot.id, call.message.message_id)
-    await message.answer_photo(photo="https://ibb.co/smbSR9Q",
+    photo = "https://ibb.co/smbSR9Q"
+    await message.answer_photo(photo=photo,
                                caption="Ключница из кожи",
                                reply_markup=kluch1, )
-    namek1 = "Ключница из кожи"
-    await state.update_data(
-        {"kluch1": namek1}
-    )
+
 
     await message.answer_photo(photo="https://ibb.co/yyKXbcg",
                                caption="Картхолдер из кожи",
                                reply_markup=carth1, )
-    namec1 = "Картхолдер из кожи"
-    await state.update_data(
-        {"cart1": namec1}
-    )
 
 
-    data = await state.get_data()
-    ff = data.get("del")
+
 @dp.callback_query_handler(text="addobloj1")
 async def koshel(call: types.CallbackQuery, state: FSMContext):
     await call.message.answer("Выберите количество ниже", reply_markup=count1)
+    namep1 = "Обложка для паспорта из кожи"
+    await state.update_data(
+        {"obloj1": namep1}
+    )
+    await call.message.delete()
     await Oblojka.oblojka1.set()
 
 
@@ -86,8 +77,13 @@ async def add1(message: types.Message, state: FSMContext):
 
 
 @dp.callback_query_handler(text="adddoc1")
-async def koshel(call: types.CallbackQuery):
+async def koshel(call: types.CallbackQuery,state:FSMContext):
     await call.message.answer("Выберите количество ниже", reply_markup=count1)
+    named1 = "Документница из кожи"
+    await state.update_data(
+        {"doc1": named1}
+    )
+    await call.message.delete()
     await Document.doc1.set()
 
 
@@ -110,8 +106,13 @@ async def add1(message: types.Message, state: FSMContext):
 
 
 @dp.callback_query_handler(text="addcart1")
-async def koshel(call: types.CallbackQuery):
+async def koshel(call: types.CallbackQuery, state: FSMContext):
     await call.message.answer("Выберите количество ниже", reply_markup=count1)
+    namec1 = "Картхолдер из кожи"
+    await state.update_data(
+        {"cart1": namec1}
+    )
+    await call.message.delete()
     await Cart.cart1.set()
 
 
@@ -134,8 +135,13 @@ async def add1(message: types.Message, state: FSMContext):
 
 
 @dp.callback_query_handler(text="addklu1")
-async def koshel(call: types.CallbackQuery):
+async def koshel(call: types.CallbackQuery,state:FSMContext):
     await call.message.answer("Выберите количество ниже", reply_markup=count1)
+    namek1 = "Ключница из кожи"
+    await state.update_data(
+        {"kluch1": namek1}
+    )
+    await call.message.delete()
     await Kluch.kluch1.set()
 
 
@@ -163,15 +169,17 @@ async def cataloc(message: types.Message, state: FSMContext):
         photo="https://ibb.co/mRmWvLm",
         caption="Портмоне из кожи",
         reply_markup=portmone1)
+
+
+
+@dp.callback_query_handler(text="addpor1")
+async def koshel(call: types.CallbackQuery,state:FSMContext):
+    await call.message.answer("Выберите количество ниже", reply_markup=count1)
     namep1 = "Портмоне из кожи"
     await state.update_data(
         {"portmone1": namep1}
     )
-
-
-@dp.callback_query_handler(text="addpor1")
-async def koshel(call: types.CallbackQuery):
-    await call.message.answer("Выберите количество ниже", reply_markup=count1)
+    await call.message.delete()
     await Portmone.portmone1.set()
 
 
@@ -198,25 +206,23 @@ async def cataloc(message: types.Message, state: FSMContext):
     await message.answer_photo(photo="https://ibb.co/4dnv4gq",
                                caption="Обложка для паспорта из кожи",
                                reply_markup=obloj1, )
-    namep1 = "Обложка для паспорта из кожи"
-    await state.update_data(
-        {"obloj1": namep1}
-    )
 
     await message.answer_photo(photo="https://ibb.co/ZzKJkhk",
                                caption="Документница из кожи",
                                reply_markup=doc1, )
-    named1 = "Документница из кожи"
-    await state.update_data(
-        {"doc1": named1}
-    )
+
 
 
 
 
 @dp.callback_query_handler(text="addban1")
-async def koshel(call: types.CallbackQuery):
+async def koshel(call: types.CallbackQuery,state:FSMContext):
     await call.message.answer("Выберите количество ниже", reply_markup=count1)
+    nameb1 = "Бананка из кожи"
+    await state.update_data(
+        {"bananka1": nameb1}
+    )
+    await call.message.delete()
     await Bananka.bananka1.set()
 
 
@@ -243,31 +249,24 @@ async def cataloc(message: types.Message, state: FSMContext):
     await message.answer_photo(
         photo="https://ibb.co/PtKYFGZ",
         caption="Кошелек из кожи женский", reply_markup=koshelek1)
-    namek1 = "Кошелёк из кожи женский"
-    await state.update_data(
-        {"koshelek1": namek1}
-    )
+
 
     await message.answer_photo(
         photo="https://ibb.co/ZL1wVFB",
         caption="Кошелек из кожи мужской", reply_markup=koshelek2)
-    namek2 = "Кошелёк из кожи мужской"
-    await state.update_data(
-        {"koshelek2": namek2}
-    ),
 
-    # await message.answer_photo(
-    #     photo="https://www.google.com/imgres?imgurl=https%3A%2F%2Fprintfiles.ru%2Ffiles%2Fuploads%2Fraspechatat%2Ftsyfry-formata-a4%2F3.jpg&imgrefurl=https%3A%2F%2Fprintfiles.ru%2Fraspechatat%2Ftsyfry-formata-a4%2Fattachment%2F3%2F&tbnid=k67Pfx1lC8hLfM&vet=12ahUKEwi8877s57P2AhVkkFwKHTBBBssQMygBegUIARC9AQ..i&docid=CB-SR93zY4IlKM&w=2484&h=3511&q=3%20%D1%86%D0%B8%D1%84%D1%80%D0%B0&ved=2ahUKEwi8877s57P2AhVkkFwKHTBBBssQMygBegUIARC9AQ",
-    #     caption="Кошелек из кожи 3", reply_markup=koshelek3)
-    # namek3 = "Кошелёк из кожи 3"
-    # await state.update_data(
-    #     {"koshelek3": namek3}
-    # )
+
+
 
 
 @dp.callback_query_handler(text="addkosh1")
-async def koshel(call: types.CallbackQuery):
+async def koshel(call: types.CallbackQuery, state: FSMContext):
     await call.message.answer("Выберите количество ниже", reply_markup=count1)
+    namek1 = "Кошелёк из кожи женский"
+    await state.update_data(
+        {"koshelek1": namek1}
+    )
+    await call.message.delete()
     await Koshelek.koshelek1.set()
 
 
@@ -290,8 +289,13 @@ async def add1(message: types.Message, state: FSMContext):
 
 
 @dp.callback_query_handler(text="addkosh2")
-async def koshel(call: types.CallbackQuery):
+async def koshel(call: types.CallbackQuery,state:FSMContext):
     await call.message.answer("Выберите количество ниже", reply_markup=count1)
+    namek2 = "Кошелёк из кожи мужской"
+    await state.update_data(
+        {"koshelek2": namek2}
+    )
+    await call.message.delete()
     await Koshelek.koshelek2.set()
 
 
@@ -325,7 +329,7 @@ async def back1(message: types.Message, state: FSMContext):
     await state.finish()
 
 
-@dp.message_handler(text="🪡Индивидуальный заказ")
+@dp.message_handler(text="🪡Индивидуальный заказ",state="*")
 async def indi(message: types.Message):
     await message.answer("Опишите свой заказ")
     await Zakaz.opis.set()

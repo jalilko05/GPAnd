@@ -11,7 +11,7 @@ from loader import dp, db
 from states.state import Zakaz1
 
 
-@dp.message_handler(text='🛒Корзинка')
+@dp.message_handler(text='🛒Корзинка',state="*")
 async def korzina(message: types.Message):
     products1 = db.get_products(tg_id=message.from_user.id)
     if len(products1) != 0:
