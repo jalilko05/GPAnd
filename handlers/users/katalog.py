@@ -372,3 +372,8 @@ async def send(call: types.CallbackQuery, state: FSMContext):
     await call.bot.send_photo(chat_id=1297546327, photo=foto, caption=f"{cap}\nUsername: @{username}")
     await call.bot.send_photo(chat_id=80386502, photo=foto, caption=f"{cap}\nUsername: @{username}")
     await state.finish()
+
+@dp.callback_query_handler(text="stop", state=Zakaz.admin)
+async def send(call: types.CallbackQuery, state: FSMContext):
+    await call.message.delete()
+    await call.message.answer("Вы отменили действие",reply_markup=menu)
